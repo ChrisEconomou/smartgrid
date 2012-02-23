@@ -1,0 +1,13 @@
+Smart Grid Simulator - group project
+
+1. Install maven http://maven.apache.org/download.html
+2. Read this: http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
+Run the JUnit tests in src/test
+$ mvn test
+
+Building the project
+$ mvn package
+
+Running the application (do this after mvn package)
+$ java -cp target/smartgrid-1.0-SNAPSHOT.jar com.smartgrid.app.App
