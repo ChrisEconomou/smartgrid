@@ -2,32 +2,27 @@ package com.smartgrid.messenger;
 import java.util.ArrayList;
 import java.lang.Class;
 import java.util.Iterator;
-@SuppressWarnings("rawtypes")
 
-public class Message {
+public class Message<T> {
 	private String methodName;
-	private ArrayList parameters;
-	private Class[] parameterTypes;
+	private T content;
+	private Class contentType;
 	
-	Message(String m, ArrayList p) {	
+	Message(String m, T c) {
 		methodName = m;
-		parameters = p;
-		parameterTypes = new Class[p.size()];
-	
-	    int i = 0;
-	    for(Object o: p.toArray())
-	    	parameterTypes[i++] = o.getClass();
+		content = c;
+		contentType = c.getClass();
 	}
 	
 	public String getMethodName () {
 		return methodName;
 	}
 	
-	public ArrayList getParameters () {
-		return parameters;
+	public T getContent () {
+		return content; 
 	}
 	
-	public Class[] getParameterTypes () {
-		return parameterTypes;
+	public Class getContentType () {
+		return contentType;
 	}
 }
