@@ -2,7 +2,6 @@ package com.smartgrid.messenger;
 
 import com.smartgrid.messenger.MessengerBasic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +46,8 @@ public class MessengerBasicTest extends TestCase {
     	members.put(1, (Object) new Person("Bob"));
     	
     	Messenger messenger = new MessengerBasic(members);
-    	Integer i = messenger.message(1, new Message<String>("anounce", "Hello World"));
+    	// message a single object with message type string, response type integer
+    	Integer i = messenger.<String,Integer>message(1, new Message<String>("anounce", "Hello World"));
     	
         assertTrue( i == 1 );
     }
@@ -59,14 +59,15 @@ public class MessengerBasicTest extends TestCase {
     	for (Integer i = 0; i < 200; i++) {
     		members.put(i, (Object) new Person(i.toString()));
     	}
-    	
+    	// create new messenger object
     	Messenger messenger = new MessengerBasic(members);
-    	Map<Integer, Integer> response = null;
     	
+    	// get list of ids
     	Integer[] member_ids = members.keySet().<Integer>toArray(new Integer[0]);
-    	
-    	response = messenger.<String, Integer>messageMany(member_ids, new Message<String>("anounce", "Hello World"));
-    	
+
+    	// message many with String typed message and Integer response type.
+    	Map<Integer, Integer> response = messenger.<String, Integer>messageMany(member_ids, new Message<String>("anounce", "Hello World"));
+    
     	for (Integer i = 0; i < 200; i++) {
     		assertTrue(response.get(i) == 1);
     	}
