@@ -3,37 +3,18 @@ package com.smartgrid.app;
 import java.util.List;
 
 public class Household {
-	
-	private Integer householdID;
+	private Integer householdId;
 	private Double electricityPrice;
 	private HouseholdPolicy policy;
 	
-	
-	public Household(Integer householdID) {
-		super();
-		this.householdID = householdID;
-	}
-	
-	public Household(Integer householdID, Double electricityPrice) {
-		super();
-		this.householdID = householdID;
-		this.electricityPrice = electricityPrice;
-	}
-	
-	public Household(Integer householdID, Double electricityPrice,
-			HouseholdPolicy policy) {
-		super();
-		this.householdID = householdID;
+	public Household(Integer householdId, Double electricityPrice, HouseholdPolicy policy) {
+		this.householdId = householdId;
 		this.electricityPrice = electricityPrice;
 		this.policy = policy;
 	}
 	
-	public Integer getHouseholdID() {
-		return householdID;
-	}
-	
-	public void setHouseholdID(Integer householdID) {
-		this.householdID = householdID;
+	public Integer getHouseholdId() {
+		return householdId;
 	}
 	
 	public Double getElectricityPrice() {
@@ -60,8 +41,8 @@ public class Household {
 		return this.policy.getAppliances();
 	}
 	
-	public boolean turnOffAppliance(String applianceID) {
-		return this.policy.turnOffAppliance(applianceID);
+	public boolean turnOffAppliance(String applianceId) {
+		return this.policy.turnOffAppliance(applianceId);
 	}
 	
 	public void notifyPrice(Double newPrice) {
@@ -75,9 +56,6 @@ public class Household {
 	
 	@Override
 	public String toString() {
-		return "Household ID: "+householdID+" running policy: <"+policy.getPolicyAuthor()+", "+policy.getPolicyVersion()+">" ;
+		return "Household Id: "+householdId+" running policy: <"+policy.getPolicyAuthor()+", "+policy.getPolicyVersion()+">" ;
 	}
-	
-	
-
 }
