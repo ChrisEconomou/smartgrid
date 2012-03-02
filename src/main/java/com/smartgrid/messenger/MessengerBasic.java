@@ -11,7 +11,7 @@ public final class MessengerBasic<T> implements Messenger<T> {
 	
 	private Map<Integer, T> members;
 	
-	MessengerBasic(Map<Integer, T> m) {
+	public MessengerBasic(Map<Integer, T> m) {
 		members = m;
 	}
 	

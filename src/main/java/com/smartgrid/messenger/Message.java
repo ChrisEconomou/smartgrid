@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.lang.Class;
 import java.util.Iterator;
 
-public class Message<T> {
+public final class Message<T> {
 	private String methodName;
 	private T content;
 	private Class contentType;
 	
-	Message(String m, T c) {
+	public Message(String m, T c) {
 		methodName = m;
 		content = c;
 

@@ -1,4 +1,6 @@
 package com.smartgrid.app;
+import com.smartgrid.app.HouseholdPolicy;
+import com.smartgrid.messenger.Message;
 
 import java.util.List;
 
@@ -41,8 +43,8 @@ public class Household {
 		return this.policy.getAppliances();
 	}
 	
-	public boolean turnOffAppliance(String applianceId) {
-		return this.policy.turnOffAppliance(applianceId);
+	public Integer turnOffAppliance(Appliance appliance) {
+		return this.policy.turnOffAppliance(appliance);
 	}
 	
 	public void notifyPrice(Double newPrice) {
@@ -50,7 +52,7 @@ public class Household {
 		this.policy.notifyPrice(newPrice);
 	}
 	
-	public Message handleMessage(Message in) {
+	public CustomMessage handleMessage(CustomMessage in) {
 		return this.policy.handleMessage(in);
 	}
 	
