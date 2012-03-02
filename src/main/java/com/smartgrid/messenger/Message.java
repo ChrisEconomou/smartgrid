@@ -11,7 +11,11 @@ public class Message<T> {
 	Message(String m, T c) {
 		methodName = m;
 		content = c;
-		contentType = c.getClass();
+
+		if (c != null)
+			contentType = c.getClass();
+		else
+			contentType = null;
 	}
 	
 	public String getMethodName () {

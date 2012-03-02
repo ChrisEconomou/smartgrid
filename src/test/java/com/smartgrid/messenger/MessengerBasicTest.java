@@ -17,7 +17,7 @@ class Person {
 	}
 
 	public Integer anounce(String s) {
-		System.out.printf("I (%s) have an anouncement: %s\n", name, s);
+		//System.out.printf("I (%s) have an anouncement: %s\n", name, s);
 		return 1;
 	}
 	
@@ -66,9 +66,8 @@ public class MessengerBasicTest extends TestCase {
 
     public void testMessageNoParameters() {
     	// message a single object with message type string, response type integer
-    	Integer i = messenger.<String,Integer>message(1, new Message<String>("anounce", "Hello World"));
-    	
-        assertTrue( i == 1 );
+    	Integer i = messenger.<Void,Integer>message(1, new Message<Void>("whats_one_plus_one", null));
+        assertTrue( i == 2 );
     }
     
     public void testMessageBooleanReturnType() {    	    	

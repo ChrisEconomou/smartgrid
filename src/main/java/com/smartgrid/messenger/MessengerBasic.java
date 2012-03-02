@@ -21,7 +21,10 @@ public final class MessengerBasic<T> implements Messenger<T> {
 		// retrieve method from target object
 		Method target = null;
 		try {
-			target = recepient.getClass().getMethod(m.getMethodName(), m.getContentType());
+			if (m.getContentType() == null)
+				target = recepient.getClass().getMethod(m.getMethodName());
+			else
+				target = recepient.getClass().getMethod(m.getMethodName(), m.getContentType());
 		} catch (SecurityException e) {
 			System.out.printf("Target method '%s' isn't public?\n", m.getMethodName());
 			e.printStackTrace();
@@ -34,7 +37,10 @@ public final class MessengerBasic<T> implements Messenger<T> {
 		
 		// call method
 		try {
-			r = (ResponseType) target.invoke(recepient, m.getContent());
+			if (m.getContent() == null)
+				r = (ResponseType) target.invoke(recepient);
+			else
+				r = (ResponseType) target.invoke(recepient, m.getContent());
 		} catch (IllegalArgumentException e) {
 			System.out.printf("Invalid arguments to method %s", m.getMethodName());
 			e.printStackTrace();
