@@ -7,16 +7,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import com.smartgrid.messenger.Message;
 
-public final class MessengerBasic implements Messenger {
+public final class MessengerBasic<T> implements Messenger<T> {
 	
-	private Map<Integer, Object> members;
+	private Map<Integer, T> members;
 	
-	MessengerBasic(Map<Integer, Object> m) {
+	MessengerBasic(Map<Integer, T> m) {
 		members = m;
 	}
 	
-	public <MessageType,ResponseType> ResponseType message(int id, Message<MessageType> m) {
-		Object recepient = getMember(id);
+	public <MessageType,ResponseType> ResponseType message(Integer id, Message<MessageType> m) {
+		T recepient = getMember(id);
 		
 		// retrieve method from target object
 		Method target = null;
@@ -50,7 +50,6 @@ public final class MessengerBasic implements Messenger {
 	}
 
 	public <MessageType, ResponseType> Map<Integer, ResponseType> messageMany(Integer[] recipients, Message<MessageType> m) {
-		
 		Map<Integer, ResponseType> response = new HashMap<Integer, ResponseType> ();
 		
 		for (Integer id : recipients) {
@@ -60,7 +59,7 @@ public final class MessengerBasic implements Messenger {
 		return response;
 	}
 	
-	private Object getMember(int id) {
+	private T getMember(int id) {
 		return members.get(id);
 	}
 }
