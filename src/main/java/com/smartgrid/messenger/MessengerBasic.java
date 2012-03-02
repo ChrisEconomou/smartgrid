@@ -15,7 +15,7 @@ public final class MessengerBasic<T> implements Messenger<T> {
 		members = m;
 	}
 	
-	public <MessageType,ResponseType> ResponseType message(Integer id, Message<MessageType> m) {
+	public <ResponseType,MessageType> ResponseType message(Integer id, Message<MessageType> m) {
 		T recepient = getMember(id);
 		
 		// retrieve method from target object
@@ -55,11 +55,11 @@ public final class MessengerBasic<T> implements Messenger<T> {
 		return r;
 	}
 
-	public <MessageType, ResponseType> Map<Integer, ResponseType> messageMany(Integer[] recipients, Message<MessageType> m) {
+	public <ResponseType, MessageType> Map<Integer, ResponseType> messageMany(Integer[] recipients, Message<MessageType> m) {
 		Map<Integer, ResponseType> response = new HashMap<Integer, ResponseType> ();
 		
 		for (Integer id : recipients) {
-			response.put(id, this.<MessageType, ResponseType>message(id, m));
+			response.put(id, this.<ResponseType,MessageType>message(id, m));
 		}
 		
 		return response;

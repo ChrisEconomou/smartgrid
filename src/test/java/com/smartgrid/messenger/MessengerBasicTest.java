@@ -60,13 +60,13 @@ public class MessengerBasicTest extends TestCase {
 
     public void testMessageOne() {
     	// message a single object with message type string, response type integer
-    	Integer i = messenger.<String,Integer>message(1, new Message<String>("anounce", "Hello World"));
+    	Integer i = messenger.<Integer,String>message(1, new Message<String>("anounce", "Hello World"));
         assertTrue( i == 1 );
     }
 
     public void testMessageNoParameters() {
     	// message a single object with message type string, response type integer
-    	Integer i = messenger.<Void,Integer>message(1, new Message<Void>("whats_one_plus_one", null));
+    	Integer i = messenger.<Integer,Void>message(1, new Message<Void>("whats_one_plus_one", null));
         assertTrue( i == 2 );
     }
     
@@ -90,7 +90,7 @@ public class MessengerBasicTest extends TestCase {
     	Integer[] member_ids = many_members.keySet().<Integer>toArray(new Integer[0]);
 
     	// message many with String typed message and Integer response type.
-    	Map<Integer, Integer> response = messenger_with_many.<String, Integer>messageMany(member_ids, new Message<String>("anounce", "Hello World"));
+    	Map<Integer, Integer> response = messenger_with_many.<Integer,String>messageMany(member_ids, new Message<String>("anounce", "Hello World"));
     
     	for (Integer i = 0; i < 200; i++) {
     		assertTrue(response.get(i) == 1);
