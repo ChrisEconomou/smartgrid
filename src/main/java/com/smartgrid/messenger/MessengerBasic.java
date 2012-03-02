@@ -7,21 +7,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import com.smartgrid.messenger.Message;
 
-public final class MessengerBasic implements Messenger {
+public final class MessengerBasic<T> implements Messenger<T> {
 	
-	private Map<Integer, Object> members;
+	private Map<Integer, T> members;
 	
-	MessengerBasic(Map<Integer, Object> m) {
+	public MessengerBasic(Map<Integer, T> m) {
 		members = m;
 	}
 	
-	public <MessageType,ResponseType> ResponseType message(int id, Message<MessageType> m) {
-		Object recepient = getMember(id);
+	public <ResponseType,MessageType> ResponseType message(Integer id, Message<MessageType> m) {
+		T recepient = getMember(id);
 		
 		// retrieve method from target object
 		Method target = null;
 		try {
-			target = recepient.getClass().getMethod(m.getMethodName(), m.getContentType());
+			if (m.getContentType() == null)
+				target = recepient.getClass().getMethod(m.getMethodName());
+			else
+				target = recepient.getClass().getMethod(m.getMethodName(), m.getContentType());
 		} catch (SecurityException e) {
 			System.out.printf("Target method '%s' isn't public?\n", m.getMethodName());
 			e.printStackTrace();
@@ -34,7 +37,10 @@ public final class MessengerBasic implements Messenger {
 		
 		// call method
 		try {
-			r = (ResponseType) target.invoke(recepient, m.getContent());
+			if (m.getContent() == null)
+				r = (ResponseType) target.invoke(recepient);
+			else
+				r = (ResponseType) target.invoke(recepient, m.getContent());
 		} catch (IllegalArgumentException e) {
 			System.out.printf("Invalid arguments to method %s", m.getMethodName());
 			e.printStackTrace();
@@ -49,18 +55,17 @@ public final class MessengerBasic implements Messenger {
 		return r;
 	}
 
-	public <MessageType, ResponseType> Map<Integer, ResponseType> messageMany(Integer[] recipients, Message<MessageType> m) {
-		
+	public <ResponseType, MessageType> Map<Integer, ResponseType> messageMany(Integer[] recipients, Message<MessageType> m) {
 		Map<Integer, ResponseType> response = new HashMap<Integer, ResponseType> ();
 		
 		for (Integer id : recipients) {
-			response.put(id, this.<MessageType, ResponseType>message(id, m));
+			response.put(id, this.<ResponseType,MessageType>message(id, m));
 		}
 		
 		return response;
 	}
 	
-	private Object getMember(int id) {
+	private T getMember(int id) {
 		return members.get(id);
 	}
 }

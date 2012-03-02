@@ -11,3 +11,5 @@ $ mvn package
 
 Running the application (do this after mvn package)
 $ java -cp target/smartgrid-1.0-SNAPSHOT.jar com.smartgrid.app.App
+
+Don't forget to install the git eclipse plugin
