@@ -6,17 +6,17 @@ import com.smartgrid.app.Appliance;
 import com.smartgrid.app.CustomMessage;
 
 public interface HouseholdPolicy {
-	public void tick(Date date);
+	public void tick(int tickValue, int granularity, double electricityPrice);
 	
-	public String getPolicyAuthor();
+	public String getAuthor();
 	
-	public String getPolicyVersion();
+	public String getVersion();
 	
 	public Double getElectricityDemand();
 	
 	public List<Appliance> getAppliances();
 	
-	public Integer turnOffAppliance(Appliance appliance);
+	public boolean turnOffAppliance(String applianceID);
 	
 	public Integer notifyPrice(Double newPrice);
 	
