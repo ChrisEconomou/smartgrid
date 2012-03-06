@@ -117,7 +117,7 @@ public class Logger {
 				+ "`tick` bigint(20) NOT NULL,  "
 				+ "`supply` double NOT NULL,  "
 				+ "`overallDemand` double NOT NULL,  "
-				+ "PRIMARY KEY (`run_id`,`tick`)) " + "ENGINE=InnoDB "
+				+ "PRIMARY KEY (`run_id`,`tick`)) " + "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 " + "COLLATE=latin1_general_ci;";
 
 		executeUpdate(query);
@@ -128,7 +128,7 @@ public class Logger {
 				+ "`name` text CHARACTER SET latin1 NOT NULL,"
 				+ "`version` double NOT NULL,"
 				+ "PRIMARY KEY (`aggregator_policy_id`)) "
-				+ "ENGINE=InnoDB "
+				+ "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;";
 
 		executeUpdate(query);
@@ -139,7 +139,7 @@ public class Logger {
 				+ "`demand` double NOT NULL,"
 				+ "`appliancesOn` int(11) NOT NULL,"
 				+ "PRIMARY KEY (`household_id`,`run_id`,`tick`)) "
-				+ "ENGINE=InnoDB "
+				+ "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
 
 		executeUpdate(query);
@@ -150,7 +150,7 @@ public class Logger {
 				+ "`name` text CHARACTER SET latin1 NOT NULL,"
 				+ "`version` double NOT NULL,"
 				+ "PRIMARY KEY (`household_policy_id`)) "
-				+ "ENGINE=InnoDB "
+				+ "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;";
 
 		executeUpdate(query);
@@ -160,7 +160,7 @@ public class Logger {
 				+ "`aggregator_policy_id` int(11) NOT NULL,"
 				+ "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
 				+ "PRIMARY KEY (`run_id`)) "
-				+ "ENGINE=InnoDB "
+				+ "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;";
 
 		executeUpdate(query);
@@ -170,7 +170,7 @@ public class Logger {
 				+ "`household_id` bigint(20) NOT NULL,"
 				+ "`household_policy_id` int(11) NOT NULL,"
 				+ "PRIMARY KEY (`run_id`,`household_id`,`household_policy_id`)) "
-				+ "ENGINE=InnoDB "
+				+ "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;";
 
 		executeUpdate(query);
