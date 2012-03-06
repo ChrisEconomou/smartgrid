@@ -20,5 +20,5 @@ public interface HouseholdPolicy {
 	
 	public Integer notifyPrice(Double newPrice);
 	
-	public CustomMessage handleMessage(CustomMessage m);
+	public CustomMessage handleMessage(CustomMessage m) throws Exception;
 }

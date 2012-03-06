@@ -2,58 +2,61 @@ package com.smartgrid.app;
 import com.smartgrid.messenger.Message;
 import com.smartgrid.policies.HouseholdPolicy;
 
+import java.util.Date;
 import java.util.List;
 
 public class Household {
 	private Integer householdId;
-	private Double electricityPrice;
 	private HouseholdPolicy policy;
 	
-	public Household(Integer householdId, Double electricityPrice, HouseholdPolicy policy) {
+	public Household(Integer householdId, HouseholdPolicy policy) {
 		this.householdId = householdId;
-		this.electricityPrice = electricityPrice;
 		this.policy = policy;
+	}
+	
+	private void logMessage(String msg) {
+		System.out.printf("Policy: %s Id: %d >> %s\n",
+				policy.getClass().toString(),
+				householdId,
+				msg
+				);
+	}
+	
+	public void tick(Date date) {
+		logMessage("tick");
+		policy.tick(date);
 	}
 	
 	public Integer getHouseholdId() {
 		return householdId;
 	}
-	
-	public Double getElectricityPrice() {
-		return electricityPrice;
-	}
-	
-	public void setElectricityPrice(Double electricityPrice) {
-		this.electricityPrice = electricityPrice;
-	}
-	
+
 	public HouseholdPolicy getPolicy() {
 		return policy;
 	}
 	
-	public void setPolicy(HouseholdPolicy policy) {
-		this.policy = policy;
-	}
-	
 	public Double getElectricityDemand() {
-		return this.policy.getElectricityDemand();
+		Double demand = policy.getElectricityDemand();
+		logMessage(String.format("demand %f", demand));
+		return demand;
 	}
 	
 	public List<Appliance> getAppliances() {
-		return this.policy.getAppliances();
+		return policy.getAppliances();
 	}
 	
 	public Integer turnOffAppliance(Appliance appliance) {
-		return this.policy.turnOffAppliance(appliance);
+		logMessage("Requested to turn off appliance");
+		return policy.turnOffAppliance(appliance);
 	}
 	
 	public void notifyPrice(Double newPrice) {
-		this.electricityPrice=newPrice;
-		this.policy.notifyPrice(newPrice);
+		logMessage(String.format("new price %f", newPrice));
+		policy.notifyPrice(newPrice);
 	}
 	
-	public CustomMessage handleMessage(CustomMessage in) {
-		return this.policy.handleMessage(in);
+	public CustomMessage handleMessage(CustomMessage in) throws Exception {
+		return policy.handleMessage(in);
 	}
 	
 	@Override
