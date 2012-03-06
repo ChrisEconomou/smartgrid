@@ -4,7 +4,7 @@ public class Appliance {
 	private Integer id;
 	private Double	demand;
 	
-	Appliance (Integer id, Double demand) {
+	public Appliance (Integer id, Double demand) {
 		this.id = id;
 		this.demand = demand;
 	}
