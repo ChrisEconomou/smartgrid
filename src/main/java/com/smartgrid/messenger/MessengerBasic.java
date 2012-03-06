@@ -11,8 +11,12 @@ public final class MessengerBasic<T> implements Messenger<T> {
 	
 	private Map<Integer, T> members;
 	
-	public MessengerBasic(Map<Integer, T> m) {
-		members = m;
+	public MessengerBasic(Map<Integer, T> members) {
+		this.members = members;
+	}
+	
+	public Integer[] memberIds() {
+		return members.keySet().<Integer>toArray(new Integer[0]);
 	}
 	
 	public <ResponseType,MessageType> ResponseType message(Integer id, Message<MessageType> m) {

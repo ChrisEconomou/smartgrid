@@ -11,17 +11,15 @@ import java.util.Map;
 
 public class Aggregator {
 	
-	private Map<Integer, Double> householdDemandMap;//
+	private Map<Integer, Double> householdDemandMap;
 	private Logger logger;
 	private Double electricitySupply;
-	private HashMap<Integer,Household> households;
-	private Messenger<Household> messenger;
 	private Integer[] allHouseholdIds;
+	private Messenger<Household> messenger;
 	
-	Aggregator (HashMap<Integer,Household> h) {
-		this.households = h;
-		this.allHouseholdIds = households.keySet().<Integer>toArray(new Integer[0]);
-		this.messenger = new MessengerBasic<Household>(households);
+	Aggregator (Messenger<Household> messenger) {
+		this.messenger = messenger;
+		allHouseholdIds = messenger.memberIds();
 	}
 		
 	public Logger getLogger() {
@@ -47,7 +45,7 @@ public class Aggregator {
 	}
 
 	//updates the houseHoldMap attribute
-	public void updateHouseHoldDemands(){
+	public void updateHouseholdDemands(){
     	Message<Void> m = new Message<Void>("getElectricityDemand", null);
     	householdDemandMap = messenger.<Double,Void>messageMany(allHouseholdIds, m);
 	}
