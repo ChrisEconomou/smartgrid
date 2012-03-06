@@ -53,16 +53,18 @@ public class Logger {
 	 *            the database that will be accessed.
 	 * @param hostname
 	 *            the database hostname (localhost or otherwise).
+	 * @param port
+	 *            the database port
 	 * @param username
 	 *            the database username used for accessing the database.
 	 * @param password
 	 *            the database user's password.
 	 */
-	public Logger(String hostname, String database, String username,
+	public Logger(String hostname, String port, String database, String username,
 			String password) {
 		con = null;
 		stmt = null;
-		this.connectionURL = "jdbc:mysql://" + hostname + ":3306/" + database
+		this.connectionURL = "jdbc:mysql://" + hostname + ":" + port + "/" + database
 				+ "?" + "user=" + username + "&password=" + password;
 	}
 
