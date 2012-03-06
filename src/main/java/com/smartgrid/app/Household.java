@@ -1,6 +1,6 @@
 package com.smartgrid.app;
-import com.smartgrid.app.HouseholdPolicy;
 import com.smartgrid.messenger.Message;
+import com.smartgrid.policies.HouseholdPolicy;
 
 import java.util.List;
 

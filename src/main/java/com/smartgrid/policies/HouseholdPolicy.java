@@ -1,4 +1,4 @@
-package com.smartgrid.app;
+package com.smartgrid.policies;
 
 import java.util.Date;
 import java.util.List;
