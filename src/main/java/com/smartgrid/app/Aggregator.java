@@ -6,6 +6,7 @@ import com.smartgrid.messenger.MessengerBasic;
 import com.smartgrid.app.Appliance;
 import com.smartgrid.app.Household;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,9 +18,10 @@ public class Aggregator {
 	private Integer[] allHouseholdIds;
 	private Messenger<Household> messenger;
 	
-	Aggregator (Messenger<Household> messenger) {
+	Aggregator (Messenger<Household> messenger, Logger logger) {
 		this.messenger = messenger;
 		allHouseholdIds = messenger.memberIds();
+		this.logger = logger;
 	}
 		
 	public Logger getLogger() {
@@ -44,10 +46,20 @@ public class Aggregator {
 		return householdDemandMap;
 	}
 
-	//updates the houseHoldMap attribute
-	public void updateHouseholdDemands(){
+	// updates the houseHoldMap attribute, returns total demand
+	public Double updateHouseholdDemands(Date date){
     	Message<Void> m = new Message<Void>("getElectricityDemand", null);
     	householdDemandMap = messenger.<Double,Void>messageMany(allHouseholdIds, m);
+
+    	Double total = 0.0;
+
+    	for (Integer i: allHouseholdIds) {
+    		total += householdDemandMap.get(i);
+    		// TODO some how fetch number of appliances
+    		logger.logHouseholdDemand(i, date, householdDemandMap.get(i), 3);
+    	}
+    	
+    	return total;
 	}
 
    //Sends a message to the household requesting an appliance to be turned off. 

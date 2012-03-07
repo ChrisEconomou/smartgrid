@@ -20,19 +20,21 @@ public class Simulator {
 	private Integer granularity; // seconds per tick
 	private AggregatorPolicy aggregatorPolicy;
 	private Aggregator aggregator;
+	private Logger logger;
 	
 	public Simulator(HashMap<Integer,Household> households,
 			Long iterations,
 			Integer granularity,
-			AggregatorPolicy aggregatorPolicy
+			AggregatorPolicy aggregatorPolicy,
+			Logger logger
 			) {
 		this.iterations  = iterations;
 		this.granularity = granularity;
 		this.aggregatorPolicy = aggregatorPolicy;
 		
 		messenger = new MessengerBasic<Household>(households);
-		aggregator = new Aggregator(messenger);
-
+		aggregator = new Aggregator(messenger, logger);
+		this.logger = logger;
 		this.aggregatorPolicy.setup(aggregator);
 	}
 	
@@ -40,8 +42,9 @@ public class Simulator {
 		// execute each household tick TODO: use messenger
 		messenger.<Void,Date>messageMany(messenger.memberIds(), new Message<Date>("tick", date));
 		// execute aggregator policy tick.
-		aggregator.updateHouseholdDemands();
+		Double overallDemand  = aggregator.updateHouseholdDemands(date);
 		aggregatorPolicy.tick(date, aggregator);
+		logger.logAggregator(date, aggregator.getElectricitySupply(), overallDemand);
 	}
 	
 	public void run() {
