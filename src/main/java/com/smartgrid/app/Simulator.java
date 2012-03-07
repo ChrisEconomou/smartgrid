@@ -46,6 +46,7 @@ public class Simulator {
 	// update list of demands
 	private void tick(Date date) {
 		messenger.<Void,Date>messageMany(messenger.memberIds(), new Message<Date>("tick", date));
+		aggregator.updateApplianceMap();
 		Double overallDemand  = aggregator.updateHouseholdDemands(date);
 		logger.logAggregator(date, aggregator.getElectricitySupply(), overallDemand);
 		aggregatorPolicy.tick(date, aggregator);

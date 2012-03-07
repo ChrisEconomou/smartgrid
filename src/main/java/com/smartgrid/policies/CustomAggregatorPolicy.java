@@ -19,7 +19,7 @@ public class CustomAggregatorPolicy implements AggregatorPolicy {
 	}
 
 	public void tick(Date date, Aggregator aggregator) {
-		Map<Integer, Double> demandMap = aggregator.getHouseHoldDemandMap();
+		Map<Integer, Double> demandMap = aggregator.getHouseholdDemandMap();
 		
 		double totalDemand = 0;
 		for (Double e: demandMap.values() ) totalDemand +=e;

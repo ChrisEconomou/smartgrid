@@ -14,6 +14,7 @@ import java.util.Map;
 public class Aggregator {
 	
 	private Map<Integer, Double> householdDemandMap;
+	private Map<Integer, List<Appliance>> applianceMap;
 	private Logger logger;
 	private Double electricitySupply;
 	private Integer[] allHouseholdIds;
@@ -43,10 +44,19 @@ public class Aggregator {
 
 	//returns a map of household ids to their demand values. 
 	//It is up to developers to ensure that the Household policy can handle these messages.
-	public Map<Integer,Double> getHouseHoldDemandMap() {		
+	public Map<Integer,Double> getHouseholdDemandMap() {		
 		return householdDemandMap;
 	}
+	
+	public Map<Integer,List<Appliance>> getHouseholdApplianceMap() {		
+		return applianceMap;
+	}
 
+	public void updateApplianceMap() {
+		Message<Void> m = new Message<Void>("getAppliances", null);
+		applianceMap = messenger.<List<Appliance>,Void>messageMany(allHouseholdIds, m);
+	}
+	
 	// updates the houseHoldMap attribute, returns total demand
 	public Double updateHouseholdDemands(Date date){
     	Message<Void> m = new Message<Void>("getElectricityDemand", null);
@@ -57,6 +67,7 @@ public class Aggregator {
     	for (Integer i: allHouseholdIds) {
     		total += householdDemandMap.get(i);
     		// TODO some how fetch number of appliances
+    		Integer appliances = applianceMap.get(i).size();
     		logger.logHouseholdDemand(i, date, householdDemandMap.get(i), 3);
     	}
     	
@@ -80,8 +91,7 @@ public class Aggregator {
    //This allows the policy author to request a list of appliances that a home is using,
    //including their individual demands.
    public List<Appliance> getAppliances(Integer householdId) {
-	   Message<Void> m = new Message<Void>("getAppliances", null);
-	   return messenger.<List<Appliance>,Void>message(householdId, m);
+	   return applianceMap.get(householdId);
    }
    
 }
