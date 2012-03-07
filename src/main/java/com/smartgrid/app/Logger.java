@@ -78,8 +78,9 @@ public class Logger {
 		try {
 			con = DriverManager.getConnection(connectionURL);
 		} catch (SQLException e) {
-			System.out.println("SQL Exception: " + e.toString());
-			return false;
+			System.out.println("Connection SQL Exception: " + e.toString());
+			e.printStackTrace();
+			System.exit(-1);
 		}
 
 		try {
@@ -194,7 +195,8 @@ public class Logger {
 			stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			System.out.println("SQL Exception: " + e.toString());
-			return false;
+			e.printStackTrace();
+			System.exit(-1);
 		}
 		return true;
 	}
