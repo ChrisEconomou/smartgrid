@@ -60,11 +60,11 @@ public class Logger {
 	 * @param password
 	 *            the database user's password.
 	 */
-	public Logger(String hostname, String port, String database, String username,
+	public Logger(String hostname,  String database, String username,
 			String password) {
 		con = null;
 		stmt = null;
-		this.connectionURL = "jdbc:mysql://" + hostname + ":" + port + "/" + database
+		this.connectionURL = "jdbc:mysql://" + hostname + "/" + database
 				+ "?" + "user=" + username + "&password=" + password;
 	}
 
