@@ -442,14 +442,13 @@ public class Logger {
 			logger.logHouseholdPolicy("HouseAuthor", "HouseName", 1.0);
 			logger.logRun();
 
-			// will be called once per tick
-			logger.logAggregator(date, 1000, 653);
-
 			for (int i = 1; i <= it; i++) {
-				logger.logRunHouseholdConnection(i, "HouseAuthor", "HouseName",
-						1.0);
+				logger.logRunHouseholdConnection(i, "HouseAuthor", "HouseName", 1.0);
 			}
 
+			// will be called once per tick
+			logger.logAggregator(date, 1000, 653);
+			
 			for (int i = 1; i <= it; i++) {
 				logger.logHouseholdDemand(i, date, 12.3, i % 10);
 			}
