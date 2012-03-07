@@ -17,6 +17,8 @@ public class Aggregator {
 	private Map<Integer, List<Appliance>> applianceMap;
 	private Logger logger;
 	private Double electricitySupply;
+	private Double electricityPrice;
+
 	private Integer[] allHouseholdIds;
 	private Messenger<Household> messenger;
 	
@@ -25,7 +27,7 @@ public class Aggregator {
 		allHouseholdIds = messenger.memberIds();
 		this.logger = logger;
 	}
-		
+	
 	public Logger getLogger() {
 		return logger;
 	}
@@ -84,9 +86,14 @@ public class Aggregator {
    //this sets the price of electricity and triggers a message to be sent to all 
    //households with the updated price. (Also logged by the logger)
    public void setElectricityPrice(double price){
+	   electricityPrice = price;
 	   Message<Double> m = new Message<Double>("notifyPrice", price);
 	   messenger.<Integer,Double>messageMany(allHouseholdIds, m);	   
-   } 
+   }
+
+	public Double getElectricityPrice() {
+		return electricityPrice;
+	}
 
    //This allows the policy author to request a list of appliances that a home is using,
    //including their individual demands.

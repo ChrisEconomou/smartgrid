@@ -48,7 +48,7 @@ public class Simulator {
 		messenger.<Void,Date>messageMany(messenger.memberIds(), new Message<Date>("tick", date));
 		aggregator.updateApplianceMap();
 		Double overallDemand  = aggregator.updateHouseholdDemands(date);
-		logger.logAggregator(date, aggregator.getElectricitySupply(), overallDemand);
+		logger.logAggregator(date, aggregator.getElectricitySupply(), overallDemand, aggregator.getElectricityPrice());
 		aggregatorPolicy.tick(date, aggregator);
 	}
 	
