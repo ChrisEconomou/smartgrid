@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.smartgrid.app.Appliance;
+import com.smartgrid.policies.Appliance;
+import com.smartgrid.policies.GenericAppliance;
 import com.smartgrid.app.CustomMessage;
 
 public class CustomHouseholdPolicy implements HouseholdPolicy {
@@ -17,9 +18,9 @@ public class CustomHouseholdPolicy implements HouseholdPolicy {
 	
 	public CustomHouseholdPolicy() {
 		appliances = new ArrayList<Appliance>();
-		appliances.add(new Appliance(1, 10.0));
-		appliances.add(new Appliance(2, 5.0));
-		appliances.add(new Appliance(3, 5.0));
+		appliances.add(new GenericAppliance(1, 10.0));
+		appliances.add(new GenericAppliance(2, 5.0));
+		appliances.add(new GenericAppliance(3, 5.0));
 	}
 	
 	public void tick(Date date) {

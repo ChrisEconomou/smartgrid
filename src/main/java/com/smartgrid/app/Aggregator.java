@@ -3,7 +3,7 @@ package com.smartgrid.app;
 import com.smartgrid.messenger.Message;
 import com.smartgrid.messenger.Messenger;
 import com.smartgrid.messenger.MessengerBasic;
-import com.smartgrid.app.Appliance;
+import com.smartgrid.policies.Appliance;
 import com.smartgrid.app.Household;
 
 import java.util.Date;

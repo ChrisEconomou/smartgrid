@@ -2,7 +2,7 @@ package com.smartgrid.policies;
 
 import java.util.Date;
 import java.util.List;
-import com.smartgrid.app.Appliance;
+import com.smartgrid.policies.Appliance;
 import com.smartgrid.app.CustomMessage;
 
 public interface HouseholdPolicy {
