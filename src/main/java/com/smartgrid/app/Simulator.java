@@ -34,17 +34,21 @@ public class Simulator {
 		
 		messenger = new MessengerBasic<Household>(households);
 		aggregator = new Aggregator(messenger, logger);
+		
+		// store supply and notify households of initial price
+		aggregator.setElectricitySupply(aggregatorPolicy.getSupply());
+		aggregator.setElectricityPrice(aggregatorPolicy.getPrice());
+		
 		this.logger = logger;
-		this.aggregatorPolicy.setup(aggregator);
 	}
-	
+
+	// call tick on households and aggregator
+	// update list of demands
 	private void tick(Date date) {
-		// execute each household tick TODO: use messenger
 		messenger.<Void,Date>messageMany(messenger.memberIds(), new Message<Date>("tick", date));
-		// execute aggregator policy tick.
 		Double overallDemand  = aggregator.updateHouseholdDemands(date);
-		aggregatorPolicy.tick(date, aggregator);
 		logger.logAggregator(date, aggregator.getElectricitySupply(), overallDemand);
+		aggregatorPolicy.tick(date, aggregator);
 	}
 	
 	public void run() {

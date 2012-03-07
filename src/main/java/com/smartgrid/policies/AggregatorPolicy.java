@@ -13,6 +13,7 @@ public interface AggregatorPolicy {
 	
 	public void tick(Date date, Aggregator aggregator);
 	
-	public void setup(Aggregator aggregator);
-
+	public Double getPrice();
+	
+	public Double getSupply();
 }
