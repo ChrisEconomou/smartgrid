@@ -60,12 +60,12 @@ public class Logger {
 	 * @param password
 	 *            the database user's password.
 	 */
-	public Logger(String hostname,  String database, String username,
+	public Logger(String hostname, String database, String username,
 			String password) {
 		con = null;
 		stmt = null;
-		this.connectionURL = "jdbc:mysql://" + hostname + "/" + database
-				+ "?" + "user=" + username + "&password=" + password;
+		this.connectionURL = "jdbc:mysql://" + hostname + "/" + database + "?"
+				+ "user=" + username + "&password=" + password;
 	}
 
 	/**
@@ -120,6 +120,7 @@ public class Logger {
 				+ "`tick` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  "
 				+ "`supply` double NOT NULL,  "
 				+ "`overallDemand` double NOT NULL,  "
+				+ "`price` double NOT NULL,"
 				+ "PRIMARY KEY (`run_id`,`tick`)) " + "ENGINE=MyISAM "
 				+ "DEFAULT CHARSET=latin1 " + "COLLATE=latin1_general_ci;";
 
@@ -258,20 +259,21 @@ public class Logger {
 	 * 
 	 * @return true if the query is executed correctly, false otherwise.
 	 */
-	public boolean logAggregator(Date tick, double supply, double overallDemand) {
+	public boolean logAggregator(Date tick, double supply,
+			double overallDemand, double price) {
 
 		Timestamp tstamp = new Timestamp(tick.getTime());
 
 		String query = new String();
 
-		query = "INSERT INTO aggregator_log (run_id, tick, supply, overallDemand) VALUES ("
+		query = "INSERT INTO aggregator_log (run_id, tick, supply, overallDemand, price) VALUES ("
 				+ " ((SELECT Auto_increment FROM information_schema.tables WHERE table_name='run') - 1)"
 				+ ",'"
 				+ tstamp.toString()
 				+ "',"
 				+ supply
 				+ ","
-				+ overallDemand + ");";
+				+ overallDemand + "," + price + ");";
 
 		if (executeUpdate(query)) {
 			return true;
@@ -430,31 +432,4 @@ public class Logger {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		Logger logger = new Logger();
-        int it=10;
-		if (logger.open()) {
-
-			Date date = new java.util.Date();
-
-			// need to be called once per run
-			logger.logAggregatorPolicy("AggAuthor", "AggName", 1.0);
-			logger.logHouseholdPolicy("HouseAuthor", "HouseName", 1.0);
-			logger.logRun();
-
-			for (int i = 1; i <= it; i++) {
-				logger.logRunHouseholdConnection(i, "HouseAuthor", "HouseName", 1.0);
-			}
-
-			// will be called once per tick
-			logger.logAggregator(date, 1000, 653);
-			
-			for (int i = 1; i <= it; i++) {
-				logger.logHouseholdDemand(i, date, 12.3, i % 10);
-			}
-
-			logger.close();
-		}
-	}
 }
