@@ -46,8 +46,12 @@ public class CustomHouseholdPolicy implements HouseholdPolicy {
 		return "Robin Edwards";
 	}
 
-	public String getPolicyVersion() {
-		return "1.0";
+	public String getPolicyName() {
+		return "Custom Household Policy";
+	}
+	
+	public Double getPolicyVersion() {
+		return 1.0;
 	}
 
 	public Double getElectricityDemand() {
@@ -75,4 +79,5 @@ public class CustomHouseholdPolicy implements HouseholdPolicy {
 	public CustomMessage handleMessage(CustomMessage m) throws Exception {
 		throw new Exception("Don't know how to handle message " + m.toString());
 	}
+
 }

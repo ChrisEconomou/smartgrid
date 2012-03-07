@@ -10,7 +10,9 @@ public interface HouseholdPolicy {
 	
 	public String getPolicyAuthor();
 	
-	public String getPolicyVersion();
+	public String getPolicyName();
+	
+	public Double getPolicyVersion();
 	
 	public Double getElectricityDemand();
 	
