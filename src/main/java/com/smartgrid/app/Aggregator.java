@@ -8,6 +8,7 @@ import com.smartgrid.app.Household;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Aggregator {
@@ -78,8 +79,9 @@ public class Aggregator {
 
    //This allows the policy author to request a list of appliances that a home is using,
    //including their individual demands.
-   public Appliance getAppliances(Integer householdId) {
+   public List<Appliance> getAppliances(Integer householdId) {
 	   Message<Void> m = new Message<Void>("getAppliances", null);
-	   return messenger.<Appliance,Void>message(householdId, m);
+	   return messenger.<List<Appliance>,Void>message(householdId, m);
    }
+   
 }
