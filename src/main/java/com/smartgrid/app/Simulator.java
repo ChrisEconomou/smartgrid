@@ -1,8 +1,6 @@
 package com.smartgrid.app;
 
 import java.util.HashMap;
-import java.util.GregorianCalendar;
-import java.util.Calendar;
 import java.util.Date;
 import com.smartgrid.app.Aggregator;
 import com.smartgrid.messenger.Message;
@@ -53,9 +51,7 @@ public class Simulator {
 	}
 	
 	public void run() {
-		Calendar cal = GregorianCalendar.getInstance();
-		startTime = cal.getTimeInMillis();
-		currentTime = startTime;
+		currentTime = (new Date ()).getTime();
 
 		while (tick <= iterations) {
 			tick++;
